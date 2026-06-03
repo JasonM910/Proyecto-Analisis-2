@@ -1,5 +1,8 @@
 package controlador;
 
+import com.sun.nio.sctp.PeerAddressChangeNotification;
+import fuerzaBruta.FuerzaBrutaSolver;
+import fuerzaBruta.MetricasFuerzaBruta;
 import generador.GeneradorPiezas;
 import modelo.DatosRompecabezas;
 import modelo.Pieza;
@@ -17,6 +20,7 @@ public class ControladorPruebas {
     private static final boolean[] OPCIONES_ROTACION = {false, true};
 
     private final GeneradorPiezas generadorPiezas;
+
 
     /**
      * Crea el controlador con el generador de piezas del proyecto.
@@ -40,19 +44,34 @@ public class ControladorPruebas {
         }
     }
 
+
     private void ejecutarPrueba(int dimension, int valorMaximo, boolean permitirRotacion) {
         DatosRompecabezas datos = generadorPiezas.generar(dimension, valorMaximo);
         List<Pieza> piezas = datos.obtenerPiezasMezcladas();
         Rompecabezas solucionConocida = datos.obtenerSolucionConocida();
 
+        FuerzaBrutaSolver solver = new FuerzaBrutaSolver(permitirRotacion);
+        Rompecabezas solucionFuerzaBruta = solver.resolver(piezas, dimension);
+        MetricasFuerzaBruta metricas = solver.obtenerMetricas();
+
         imprimirTituloPrueba(dimension, valorMaximo, permitirRotacion);
         System.out.println("Cantidad de piezas generadas: " + piezas.size());
         System.out.println("Orden mezclado de piezas:");
         imprimirPiezasMezcladas(piezas);
+
         System.out.println();
         System.out.println("Solucion conocida generada:");
         System.out.println(solucionConocida.aTextoCompacto());
-        imprimirValidacion(solucionConocida);
+        imprimirValidacionSolucionConocida(solucionConocida);
+
+        System.out.println("Solucion encontrada por fuerza bruta:");
+        System.out.println("Alternativas evaluadas: " + metricas.alternativasEvaluadas);
+        System.out.println("Podas realizadas: " + metricas.podasRealizadas);
+        System.out.println("Comparaciones: " + metricas.comparaciones);
+        System.out.println("Asignaciones: " + metricas.asignaciones);
+        System.out.println("Lineas ejecutadas: " + metricas.lineasEjecutadas);
+        System.out.println("Tiempo ms: " + metricas.tiempoMilisegundos);
+        imprimirValidacionSolucionFuerzaBruta(solucionFuerzaBruta);
         System.out.println("============================================================");
         System.out.println();
     }
@@ -86,11 +105,17 @@ public class ControladorPruebas {
         }
     }
 
-    private void imprimirValidacion(Rompecabezas solucionConocida) {
+    private void imprimirValidacionSolucionConocida(Rompecabezas solucionConocida) {
         boolean bordesInternosValidos = solucionConocida.verificarBordesAdyacentes();
         boolean bordesExternosValidos = solucionConocida.verificarBordesExternos(GeneradorPiezas.VALOR_EXTERIOR);
         System.out.println("Validacion de solucion generada:");
         System.out.println("Bordes internos compatibles: " + (bordesInternosValidos ? "SI" : "NO"));
         System.out.println("Bordes externos con valor 0: " + (bordesExternosValidos ? "SI" : "NO"));
     }
+
+    private void imprimirValidacionSolucionFuerzaBruta(Rompecabezas solucionFuerzaBruta){
+        boolean solucionValida = solucionFuerzaBruta.verificarBordesAdyacentes() && solucionFuerzaBruta.verificarBordesExternos(GeneradorPiezas.VALOR_EXTERIOR) && solucionFuerzaBruta.estaCompleto();
+        System.out.println("Solucion fuerza bruta valida: "+ (solucionValida ? "SI" : "NO"));
+    }
+
 }
