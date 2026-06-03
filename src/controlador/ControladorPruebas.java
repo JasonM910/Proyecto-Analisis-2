@@ -1,6 +1,5 @@
 package controlador;
 
-import com.sun.nio.sctp.PeerAddressChangeNotification;
 import fuerzaBruta.FuerzaBrutaSolver;
 import fuerzaBruta.MetricasFuerzaBruta;
 import generador.GeneradorPiezas;
