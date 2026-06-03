@@ -20,7 +20,6 @@ public class ControladorPruebas {
 
     private final GeneradorPiezas generadorPiezas;
 
-
     /**
      * Crea el controlador con el generador de piezas del proyecto.
      */
