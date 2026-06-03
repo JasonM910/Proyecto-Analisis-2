@@ -42,15 +42,10 @@ public class ControladorPruebas {
         }
     }
 
-
     private void ejecutarPrueba(int dimension, int valorMaximo, boolean permitirRotacion) {
         DatosRompecabezas datos = generadorPiezas.generar(dimension, valorMaximo);
         List<Pieza> piezas = datos.obtenerPiezasMezcladas();
         Rompecabezas solucionConocida = datos.obtenerSolucionConocida();
-
-        FuerzaBrutaSolver solver = new FuerzaBrutaSolver(permitirRotacion);
-        Rompecabezas solucionFuerzaBruta = solver.resolver(piezas, dimension);
-        MetricasFuerzaBruta metricas = solver.obtenerMetricas();
 
         imprimirTituloPrueba(dimension, valorMaximo, permitirRotacion);
         System.out.println("Cantidad de piezas generadas: " + piezas.size());
@@ -62,13 +57,25 @@ public class ControladorPruebas {
         System.out.println(solucionConocida.aTextoCompacto());
         imprimirValidacionSolucionConocida(solucionConocida);
 
-        System.out.println("Solucion encontrada por fuerza bruta:");
+        FuerzaBrutaSolver solver = new FuerzaBrutaSolver(permitirRotacion, calcularLimiteAlternativas(dimension, permitirRotacion));
+        Rompecabezas solucionFuerzaBruta = solver.resolver(piezas, dimension);
+        MetricasFuerzaBruta metricas = solver.obtenerMetricas();
+
+        System.out.println("Resultado fuerza bruta:");
+        System.out.println(metricas.solucionEncontrada ? "Solucion completa encontrada:" : "Solucion parcial encontrada:");
+        System.out.println(solucionFuerzaBruta.aTextoCompacto());
+        System.out.println("Solucion completa: " + (metricas.solucionEncontrada ? "SI" : "NO"));
+        System.out.println("Limite alcanzado: " + (metricas.limiteAlcanzado ? "SI" : "NO"));
+        System.out.println("Limite de alternativas: " + metricas.limiteAlternativas);
+        System.out.println("Profundidad maxima: " + metricas.profundidadMaxima);
         System.out.println("Alternativas evaluadas: " + metricas.alternativasEvaluadas);
         System.out.println("Podas realizadas: " + metricas.podasRealizadas);
         System.out.println("Comparaciones: " + metricas.comparaciones);
         System.out.println("Asignaciones: " + metricas.asignaciones);
         System.out.println("Lineas ejecutadas: " + metricas.lineasEjecutadas);
-        System.out.println("Tiempo ms: " + metricas.tiempoMilisegundos);
+        System.out.println("Lineas de codigo del algoritmo: " + metricas.lineasCodigoAlgoritmo);
+        System.out.printf("Tiempo ms: %.3f%n", metricas.tiempoMilisegundos);
+        System.out.println("Memoria estimada bytes: " + metricas.memoriaBytes);
         imprimirValidacionSolucionFuerzaBruta(solucionFuerzaBruta);
         System.out.println("============================================================");
         System.out.println();
@@ -76,7 +83,7 @@ public class ControladorPruebas {
 
     private void imprimirEncabezadoGeneral() {
         System.out.println("============================================================");
-        System.out.println("GENERACION AUTOMATICA DE ROMPECABEZAS CUADRADOS");
+        System.out.println("EJECUCION AUTOMATICA DE ROMPECABEZAS CUADRADOS");
         System.out.println("Tamanos: 2x2, 3x3, 4x4, 5x5, 6x6, 10x10, 15x15");
         System.out.println("Rangos: 0..9 y 0..15 | Variante con/sin rotacion");
         System.out.println("============================================================");
@@ -111,9 +118,23 @@ public class ControladorPruebas {
         System.out.println("Bordes externos con valor 0: " + (bordesExternosValidos ? "SI" : "NO"));
     }
 
-    private void imprimirValidacionSolucionFuerzaBruta(Rompecabezas solucionFuerzaBruta){
-        boolean solucionValida = solucionFuerzaBruta.verificarBordesAdyacentes() && solucionFuerzaBruta.verificarBordesExternos(GeneradorPiezas.VALOR_EXTERIOR) && solucionFuerzaBruta.estaCompleto();
-        System.out.println("Solucion fuerza bruta valida: "+ (solucionValida ? "SI" : "NO"));
+    private void imprimirValidacionSolucionFuerzaBruta(Rompecabezas solucionFuerzaBruta) {
+        boolean solucionValida = solucionFuerzaBruta.estaCompleto()
+                && solucionFuerzaBruta.verificarBordesAdyacentes()
+                && solucionFuerzaBruta.verificarBordesExternos(GeneradorPiezas.VALOR_EXTERIOR);
+        System.out.println("Solucion fuerza bruta valida: " + (solucionValida ? "SI" : "NO"));
     }
 
+    private long calcularLimiteAlternativas(int dimension, boolean permitirRotacion) {
+        if (dimension <= 3) {
+            return permitirRotacion ? 1_000_000L : 250_000L;
+        }
+        if (dimension <= 5) {
+            return permitirRotacion ? 200_000L : 100_000L;
+        }
+        if (dimension == 6) {
+            return permitirRotacion ? 100_000L : 50_000L;
+        }
+        return permitirRotacion ? 50_000L : 25_000L;
+    }
 }
