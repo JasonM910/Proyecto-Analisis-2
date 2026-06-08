@@ -6,6 +6,8 @@ import generador.GeneradorPiezas;
 import modelo.DatosRompecabezas;
 import modelo.Pieza;
 import modelo.Rompecabezas;
+import genetico.GeneticSolver;
+import genetico.MetricasGenetico;
 
 import java.util.List;
 import java.util.Locale;
@@ -79,6 +81,29 @@ public class ControladorPruebas {
         imprimirValidacionSolucionFuerzaBruta(solucionFuerzaBruta);
         System.out.println("============================================================");
         System.out.println();
+        System.out.println("Resultado algoritmo genetico:");
+
+        GeneticSolver solverGenetico = new GeneticSolver(permitirRotacion);
+        Rompecabezas solucionGenetica = solverGenetico.resolver(piezas, dimension);
+        MetricasGenetico metricasGenetico = solverGenetico.obtenerMetricas();
+
+        System.out.println(metricasGenetico.solucionEncontrada ? "Solucion completa encontrada:" : "Solucion parcial encontrada:");
+        System.out.println();
+        System.out.println("========== RESUMEN GENETICO ==========");
+        System.out.println(solucionGenetica.aTextoCompacto());
+        System.out.println("Solucion completa: " + (metricasGenetico.solucionEncontrada ? "SI" : "NO"));
+        System.out.println("Mejor fitness: " + metricasGenetico.mejorFitness);
+        System.out.println("Peor fitness: " + metricasGenetico.peorFitness);
+        System.out.println("Promedio fitness: " + metricasGenetico.promedioFitness);
+        System.out.println("Generaciones ejecutadas: " + metricasGenetico.generacionesEjecutadas);
+        System.out.println("Comparaciones: " + metricasGenetico.comparaciones);
+        System.out.println("Asignaciones: " + metricasGenetico.asignaciones);
+        System.out.println("Lineas ejecutadas: " + metricasGenetico.lineasEjecutadas);
+        System.out.println("Lineas de codigo del algoritmo: " + metricasGenetico.lineasCodigoAlgoritmo);
+        System.out.printf("Tiempo ms: %.3f%n", metricasGenetico.tiempoMilisegundos);
+        System.out.println("Memoria estimada bytes: " + metricasGenetico.memoriaBytes);
+        System.out.println("Mutaciones realizadas: " + metricasGenetico.cantidadMutaciones);
+        System.out.println("Cruces realizados: " + metricasGenetico.cantidadCruces);
     }
 
     private void imprimirEncabezadoGeneral() {
