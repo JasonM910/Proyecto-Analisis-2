@@ -4,9 +4,6 @@ import modelo.Pieza;
 
 /**
  * Calcula la aptitud de un cromosoma segun la cantidad de bordes que coinciden.
- *
- * @since 2026-06-08
- * @version 2026-06-09
  */
 public class FitnessCalculator {
 

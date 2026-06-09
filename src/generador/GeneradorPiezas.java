@@ -11,9 +11,6 @@ import java.util.Random;
 
 /**
  * Genera piezas mezcladas garantizando que exista al menos una solucion.
- *
- * @since 2026-05-29
- * @version 2026-06-09
  */
 public class GeneradorPiezas {
     private final Random random;

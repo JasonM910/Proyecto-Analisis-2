@@ -4,11 +4,8 @@ import java.util.Objects;
 
 /**
  * Representa una pieza cuadrada con cuatro bordes numerados en sentido horario.
- *
- * @since 2026-05-29
- * @version 2026-06-09
  */
-public final class Pieza {
+public class Pieza {
     private final int id;
     private final int arriba;
     private final int derecha;

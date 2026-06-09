@@ -6,9 +6,6 @@ import java.util.List;
 
 /**
  * Selecciona los cromosomas mas aptos de la poblacion.
- *
- * @since 2026-06-08
- * @version 2026-06-09
  */
 public class Seleccion {
 

@@ -12,14 +12,11 @@ import java.util.Set;
 
 /**
  * Resuelve el rompecabezas mediante un algoritmo genetico sin rotacion de piezas.
- *
- * @since 2026-06-08
- * @version 2026-06-09
  */
 public class GeneticSolver {
     private static final int GENERACIONES = 10;
     private static final long SEMILLA_BASE = 2_026_060_800L;
-    private static final int LINEAS_CODIGO_ALGORITMO = 879;
+    private static final int LINEAS_CODIGO_ALGORITMO = 947;
     private static final int BYTES_REFERENCIA = 8;
     private static final int BYTES_INT = 4;
     private static final int BYTES_LONG = 8;
@@ -204,11 +201,15 @@ public class GeneticSolver {
                         hijoGenerado,
                         firmasUsadas
                 );
-                firmasUsadas.add(hijoAceptado.obtenerFirma(metricas));
-                hijos.add(hijoAceptado);
-                registrarMejor(hijoAceptado);
+                String firmaHijo = hijoAceptado.obtenerFirma(metricas);
+                metricas.asignaciones++;
+                if (metricas.registrarComparacion(firmasUsadas.add(firmaHijo))) {
+                    hijos.add(hijoAceptado);
+                    registrarMejor(hijoAceptado);
+                    metricas.asignaciones += 2;
+                }
                 indiceHijo++;
-                metricas.asignaciones += 5;
+                metricas.asignaciones++;
             }
 
             indicePadre++;
@@ -233,6 +234,9 @@ public class GeneticSolver {
 
     /**
      * Intenta mejorar mediante mutacion un hijo igual a otro individuo.
+     * Si la mutacion se descarta, el duplicado no puede entrar a la poblacion.
+     *
+     * @return cromosoma unico
      */
     private Cromosoma resolverDuplicado(
             Cromosoma cromosoma,
@@ -249,7 +253,87 @@ public class GeneticSolver {
         if (metricas.registrarComparacion(resultado.fueAceptada())) {
             return resultado.obtenerResultado();
         }
-        return cromosoma;
+        return generarReemplazoUnico(cromosoma, firmasUsadas);
+    }
+
+    /**
+     * Genera sistematicamente otra permutacion cuando una mutacion se descarta.
+     */
+    private Cromosoma generarReemplazoUnico(
+            Cromosoma cromosomaBase,
+            Set<String> firmasUsadas
+    ) {
+        List<Pieza> piezasOrdenadas = cromosomaBase.obtenerPiezas();
+        piezasOrdenadas.sort((primera, segunda) ->
+                Integer.compare(primera.obtenerId(), segunda.obtenerId())
+        );
+        metricas.asignaciones += piezasOrdenadas.size() + 1L;
+
+        boolean existenPermutaciones = true;
+        metricas.asignaciones++;
+        while (metricas.registrarComparacion(existenPermutaciones)) {
+            Cromosoma candidato = new Cromosoma(
+                    piezasOrdenadas,
+                    cromosomaBase.obtenerDimension(),
+                    metricas
+            );
+            fitnessCalculator.calcularFitness(candidato, metricas);
+            String firma = candidato.obtenerFirma(metricas);
+            metricas.asignaciones += 2;
+
+            if (metricas.registrarComparacion(!firmasUsadas.contains(firma))) {
+                return candidato;
+            }
+
+            existenPermutaciones = avanzarPermutacion(piezasOrdenadas);
+            metricas.asignaciones++;
+        }
+
+        throw new IllegalStateException("No existen suficientes cromosomas unicos.");
+    }
+
+    /**
+     * Avanza a la siguiente permutacion lexicografica segun el id de las piezas.
+     */
+    private boolean avanzarPermutacion(List<Pieza> piezas) {
+        int indicePivote = piezas.size() - 2;
+        metricas.asignaciones++;
+        while (metricas.registrarComparacion(
+                indicePivote >= 0
+                        && piezas.get(indicePivote).obtenerId()
+                        >= piezas.get(indicePivote + 1).obtenerId()
+        )) {
+            indicePivote--;
+            metricas.asignaciones++;
+        }
+
+        if (metricas.registrarComparacion(indicePivote < 0)) {
+            return false;
+        }
+
+        int indiceMayor = piezas.size() - 1;
+        metricas.asignaciones++;
+        while (metricas.registrarComparacion(
+                piezas.get(indiceMayor).obtenerId()
+                        <= piezas.get(indicePivote).obtenerId()
+        )) {
+            indiceMayor--;
+            metricas.asignaciones++;
+        }
+
+        Collections.swap(piezas, indicePivote, indiceMayor);
+        metricas.asignaciones += 3;
+
+        int izquierda = indicePivote + 1;
+        int derecha = piezas.size() - 1;
+        metricas.asignaciones += 2;
+        while (metricas.registrarComparacion(izquierda < derecha)) {
+            Collections.swap(piezas, izquierda, derecha);
+            izquierda++;
+            derecha--;
+            metricas.asignaciones += 5;
+        }
+        return true;
     }
 
     /**

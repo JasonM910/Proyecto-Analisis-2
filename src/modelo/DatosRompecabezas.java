@@ -6,9 +6,6 @@ import java.util.List;
 
 /**
  * Agrupa las piezas mezcladas y la solucion conocida de una prueba.
- *
- * @since 2026-05-29
- * @version 2026-06-09
  */
 public class DatosRompecabezas {
     private final int dimension;

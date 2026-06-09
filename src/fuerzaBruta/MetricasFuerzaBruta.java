@@ -2,9 +2,6 @@ package fuerzaBruta;
 
 /**
  * Almacena las mediciones empiricas reportadas por el algoritmo de fuerza bruta.
- *
- * @since 2026-06-08
- * @version 2026-06-09
  */
 public class MetricasFuerzaBruta {
     long comparaciones;

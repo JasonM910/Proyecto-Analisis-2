@@ -2,9 +2,6 @@ package modelo;
 
 /**
  * Representa el estado de un rompecabezas cuadrado de dimension n x n.
- *
- * @since 2026-05-29
- * @version 2026-06-09
  */
 public class Rompecabezas {
     private final int dimension;

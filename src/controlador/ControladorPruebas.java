@@ -14,9 +14,6 @@ import java.util.Locale;
 
 /**
  * Coordina la generacion y verificacion automatica de rompecabezas.
- *
- * @since 2026-05-29
- * @version 2026-06-09
  */
 public class ControladorPruebas {
     private static final int[] DIMENSIONES = {2, 3, 4, 5, 6, 10, 15};

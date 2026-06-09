@@ -10,9 +10,6 @@ import java.util.Map;
 
 /**
  * Resuelve un rompecabezas cuadrado usando fuerza bruta con backtracking y poda.
- *
- * @since 2026-06-08
- * @version 2026-06-09
  */
 public class FuerzaBrutaSolver {
     private static final long LIMITE_POR_DEFECTO = 250_000L;

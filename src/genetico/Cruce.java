@@ -10,9 +10,6 @@ import java.util.Set;
 
 /**
  * Realiza cruces entre cromosomas usando cruce ordenado.
- *
- * @since 2026-06-08
- * @version 2026-06-09
  */
 public class Cruce {
     private final Random random;

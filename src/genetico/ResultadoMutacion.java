@@ -2,9 +2,6 @@ package genetico;
 
 /**
  * Describe una mutacion intentada sobre un cromosoma duplicado.
- *
- * @since 2026-06-08
- * @version 2026-06-09
  */
 public class ResultadoMutacion {
     private final Cromosoma original;

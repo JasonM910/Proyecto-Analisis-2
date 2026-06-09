@@ -5,9 +5,6 @@ import java.util.Set;
 
 /**
  * Resuelve cromosomas duplicados mediante un intercambio aleatorio.
- *
- * @since 2026-06-08
- * @version 2026-06-09
  */
 public class Mutacion {
     private final Random random;

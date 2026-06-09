@@ -2,9 +2,6 @@ package genetico;
 
 /**
  * Almacena las mediciones empiricas del algoritmo genetico.
- *
- * @since 2026-06-08
- * @version 2026-06-09
  */
 public class MetricasGenetico {
     long comparaciones;

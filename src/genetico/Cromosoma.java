@@ -12,9 +12,6 @@ import java.util.Set;
 /**
  * Representa un cromosoma del algoritmo genetico.
  * Cada cromosoma contiene una posible distribucion de piezas.
- *
- * @since 2026-06-08
- * @version 2026-06-09
  */
 public class Cromosoma {
     private final List<Pieza> piezas;
