@@ -6,58 +6,74 @@ import java.util.List;
 
 /**
  * Selecciona los cromosomas mas aptos de la poblacion.
+ *
+ * @since 2026-06-08
+ * @version 2026-06-09
  */
 public class Seleccion {
 
     /**
-     * Ordena la poblacion de mayor a menor fitness.
+     * Ordena la poblacion y registra las comparaciones del ordenamiento.
      *
      * @param poblacion lista de cromosomas
+     * @param metricas mediciones de la ejecucion
      * @return poblacion ordenada
      */
-    public List<Cromosoma> ordenarPorFitness(List<Cromosoma> poblacion) {
+    public List<Cromosoma> ordenarPorFitness(List<Cromosoma> poblacion, MetricasGenetico metricas) {
         List<Cromosoma> copia = new ArrayList<>(poblacion);
+        if (metricas != null) {
+            metricas.asignaciones += poblacion.size() + 1L;
+        }
 
-        copia.sort(Comparator.comparingDouble(Cromosoma::obtenerFitness).reversed());
+        Comparator<Cromosoma> comparador = new Comparator<Cromosoma>() {
+            /**
+             * Compara dos cromosomas por fitness descendente.
+             *
+             * @param primero primer cromosoma
+             * @param segundo segundo cromosoma
+             * @return resultado de la comparacion
+             */
+            @Override
+            public int compare(Cromosoma primero, Cromosoma segundo) {
+                if (metricas != null) {
+                    metricas.comparaciones++;
+                }
+                return Double.compare(segundo.obtenerFitness(), primero.obtenerFitness());
+            }
+        };
+        if (metricas != null) {
+            metricas.asignaciones++;
+        }
+        copia.sort(comparador);
 
         return copia;
     }
 
     /**
-     * Selecciona los mejores cromosomas como padres.
-     *
-     * @param poblacion lista de cromosomas evaluados
-     * @param cantidadPadres cantidad de padres requeridos
-     * @return lista de padres seleccionados
-     */
-    public List<Cromosoma> seleccionarMejores(List<Cromosoma> poblacion, int cantidadPadres) {
-        List<Cromosoma> ordenados = ordenarPorFitness(poblacion);
-        List<Cromosoma> seleccionados = new ArrayList<>();
-
-        int limite = Math.min(cantidadPadres, ordenados.size());
-
-        for (int indice = 0; indice < limite; indice++) {
-            seleccionados.add(ordenados.get(indice).copiar());
-        }
-
-        return seleccionados;
-    }
-
-    /**
-     * Selecciona los mejores cromosomas para sobrevivir a la siguiente generacion.
+     * Selecciona los individuos mas aptos y conserva el tamano de la poblacion.
      *
      * @param poblacionTotal padres e hijos juntos
      * @param cantidadSobrevivientes cantidad fija de poblacion
-     * @return nueva poblacion
+     * @param metricas mediciones de la ejecucion
+     * @return nueva poblacion con la cantidad solicitada
      */
-    public List<Cromosoma> seleccionarSobrevivientes(List<Cromosoma> poblacionTotal, int cantidadSobrevivientes) {
-        List<Cromosoma> ordenados = ordenarPorFitness(poblacionTotal);
+    public List<Cromosoma> seleccionarSobrevivientes(
+            List<Cromosoma> poblacionTotal,
+            int cantidadSobrevivientes,
+            MetricasGenetico metricas
+    ) {
+        List<Cromosoma> ordenados = ordenarPorFitness(poblacionTotal, metricas);
         List<Cromosoma> sobrevivientes = new ArrayList<>();
+        int indice = 0;
+        if (metricas != null) {
+            metricas.asignaciones += 3;
+        }
 
-        int limite = Math.min(cantidadSobrevivientes, ordenados.size());
-
-        for (int indice = 0; indice < limite; indice++) {
-            sobrevivientes.add(ordenados.get(indice).copiar());
+        while (metricas.registrarComparacion(indice < cantidadSobrevivientes)) {
+            Cromosoma cromosoma = ordenados.get(indice);
+            sobrevivientes.add(cromosoma.copiar(metricas));
+            indice++;
+            metricas.asignaciones += 3;
         }
 
         return sobrevivientes;

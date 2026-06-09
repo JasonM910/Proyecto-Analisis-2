@@ -1,98 +1,86 @@
 package genetico;
 
-import modelo.Pieza;
-
 import java.util.Random;
+import java.util.Set;
 
 /**
- * Aplica mutaciones a los cromosomas.
+ * Resuelve cromosomas duplicados mediante un intercambio aleatorio.
+ *
+ * @since 2026-06-08
+ * @version 2026-06-09
  */
 public class Mutacion {
     private final Random random;
     private final FitnessCalculator fitnessCalculator;
 
-    public Mutacion() {
-        this.random = new Random();
+    /**
+     * Crea el operador con la fuente aleatoria compartida por el solucionador.
+     *
+     * @param random generador aleatorio
+     */
+    public Mutacion(Random random) {
+        this.random = random;
         this.fitnessCalculator = new FitnessCalculator();
     }
 
     /**
-     * Aplica mutacion a un cromosoma. La mutacion se conserva solo si mejora o iguala el fitness.
+     * Intenta una mutacion y la acepta solo si es unica y mejora el fitness.
      *
-     * @param cromosoma cromosoma original
-     * @param permitirRotacion indica si se permite rotar piezas
-     * @param metricas metricas del algoritmo genetico
-     * @return cromosoma mutado si mejora o iguala, si no retorna el original
+     * @param cromosoma cromosoma duplicado
+     * @param firmasUsadas firmas que no pueden repetirse
+     * @param metricas mediciones de la ejecucion
+     * @return resultado del intento de mutacion
      */
-    public Cromosoma mutar(Cromosoma cromosoma, boolean permitirRotacion, MetricasGenetico metricas) {
-        Cromosoma original = cromosoma.copiar();
-        Cromosoma mutado = cromosoma.copiar();
-
+    public ResultadoMutacion mutarDuplicado(
+            Cromosoma cromosoma,
+            Set<String> firmasUsadas,
+            MetricasGenetico metricas
+    ) {
+        Cromosoma original = cromosoma.copiar(metricas);
+        Cromosoma mutado = cromosoma.copiar(metricas);
+        double fitnessOriginal = original.obtenerFitness();
         int cantidadPiezas = mutado.obtenerCantidadPiezas();
-
-        if (cantidadPiezas < 2) {
-            return original;
-        }
-
-        double fitnessOriginal = fitnessCalculator.calcularFitness(original, metricas);
-
         int indiceUno = random.nextInt(cantidadPiezas);
         int indiceDos = random.nextInt(cantidadPiezas);
+        metricas.mutacionesIntentadas++;
+        metricas.asignaciones += 6;
 
-        while (indiceUno == indiceDos) {
+        while (metricas.registrarComparacion(indiceUno == indiceDos)) {
             indiceDos = random.nextInt(cantidadPiezas);
-            metricas.comparaciones++;
             metricas.asignaciones++;
         }
 
         mutado.intercambiarPiezas(indiceUno, indiceDos);
+        metricas.asignaciones += 3;
+        fitnessCalculator.calcularFitness(mutado, metricas);
 
-        System.out.println("Mutacion aplicada:");
-        System.out.println("Individuo original: " + original.describir() + " puntuacion " + fitnessOriginal);
-        System.out.println("Intercambio de posiciones: " + indiceUno + " y " + indiceDos);
+        boolean mejora = metricas.registrarComparacion(mutado.obtenerFitness() > fitnessOriginal);
+        boolean esUnica = metricas.registrarComparacion(
+                !firmasUsadas.contains(mutado.obtenerFirma(metricas))
+        );
+        boolean aceptada = mejora && esUnica;
+        metricas.asignaciones += 3;
 
-        metricas.asignaciones += 5;
-        metricas.cantidadMutaciones++;
-
-        if (permitirRotacion) {
-            aplicarRotacionAleatoria(mutado, cantidadPiezas, metricas);
+        if (metricas.registrarComparacion(aceptada)) {
+            metricas.cantidadMutaciones++;
+            return new ResultadoMutacion(
+                    original,
+                    mutado,
+                    indiceUno,
+                    indiceDos,
+                    true,
+                    metricas
+            );
         }
 
-        double fitnessMutado = fitnessCalculator.calcularFitness(mutado, metricas);
-
-        System.out.println("Mutacion: " + mutado.describir() + " puntuacion " + fitnessMutado);
-
-        metricas.comparaciones++;
-
-        if (fitnessMutado >= fitnessOriginal) {
-            System.out.println("Resultado de mutacion: ACEPTADA");
-            System.out.println();
-            return mutado;
-        }
-
-        System.out.println("Resultado de mutacion: DESCARTADA");
-        System.out.println();
-
-        return original;
-    }
-
-    private void aplicarRotacionAleatoria(Cromosoma cromosoma, int cantidadPiezas, MetricasGenetico metricas) {
-        int indiceRotacion = random.nextInt(cantidadPiezas);
-        Pieza pieza = cromosoma.obtenerPiezaEnIndice(indiceRotacion);
-        int opcion = random.nextInt(3);
-
-        if (opcion == 0) {
-            cromosoma.reemplazarPieza(indiceRotacion, pieza.rotar90());
-            System.out.println("Rotacion aplicada a posicion " + indiceRotacion + ": 90 grados");
-        } else if (opcion == 1) {
-            cromosoma.reemplazarPieza(indiceRotacion, pieza.rotar180());
-            System.out.println("Rotacion aplicada a posicion " + indiceRotacion + ": 180 grados");
-        } else {
-            cromosoma.reemplazarPieza(indiceRotacion, pieza.rotar270());
-            System.out.println("Rotacion aplicada a posicion " + indiceRotacion + ": 270 grados");
-        }
-
-        metricas.asignaciones += 4;
-        metricas.comparaciones += 2;
+        metricas.mutacionesDescartadas++;
+        return new ResultadoMutacion(
+                original,
+                mutado,
+                indiceUno,
+                indiceDos,
+                false,
+                metricas
+        );
     }
 }

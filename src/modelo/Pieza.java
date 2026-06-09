@@ -4,6 +4,9 @@ import java.util.Objects;
 
 /**
  * Representa una pieza cuadrada con cuatro bordes numerados en sentido horario.
+ *
+ * @since 2026-05-29
+ * @version 2026-06-09
  */
 public final class Pieza {
     private final int id;
@@ -166,11 +169,22 @@ public final class Pieza {
         return "P" + id + "(r" + rotacionGrados + ")[" + arriba + "," + derecha + "," + abajo + "," + izquierda + "]";
     }
 
+    /**
+     * Devuelve la descripcion textual de la pieza.
+     *
+     * @return descripcion compacta
+     */
     @Override
     public String toString() {
         return describir();
     }
 
+    /**
+     * Compara piezas por su identificador unico.
+     *
+     * @param objeto objeto por comparar
+     * @return true si representa la misma pieza
+     */
     @Override
     public boolean equals(Object objeto) {
         if (this == objeto) {
@@ -183,6 +197,11 @@ public final class Pieza {
         return id == pieza.id;
     }
 
+    /**
+     * Calcula el hash a partir del identificador.
+     *
+     * @return codigo hash
+     */
     @Override
     public int hashCode() {
         return Objects.hash(id);

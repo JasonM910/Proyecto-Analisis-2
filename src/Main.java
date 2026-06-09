@@ -1,8 +1,10 @@
 import controlador.ControladorPruebas;
 
-
 /**
  * Punto de entrada del proyecto.
+ *
+ * @since 2026-05-29
+ * @version 2026-06-09
  */
 public class Main {
 

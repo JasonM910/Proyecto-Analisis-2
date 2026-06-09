@@ -2,6 +2,9 @@ package modelo;
 
 /**
  * Representa el estado de un rompecabezas cuadrado de dimension n x n.
+ *
+ * @since 2026-05-29
+ * @version 2026-06-09
  */
 public class Rompecabezas {
     private final int dimension;
@@ -115,30 +118,6 @@ public class Rompecabezas {
     }
 
     /**
-     * Verifica que los bordes externos tengan el valor esperado.
-     *
-     * @param valorExterior valor usado para los bordes externos
-     * @return true si todos los bordes externos coinciden
-     */
-    public boolean verificarBordesExternos(int valorExterior) {
-        for (int indice = 0; indice < dimension; indice++) {
-            if (piezas[0][indice] == null || piezas[0][indice].obtenerArriba() != valorExterior) {
-                return false;
-            }
-            if (piezas[dimension - 1][indice] == null || piezas[dimension - 1][indice].obtenerAbajo() != valorExterior) {
-                return false;
-            }
-            if (piezas[indice][0] == null || piezas[indice][0].obtenerIzquierda() != valorExterior) {
-                return false;
-            }
-            if (piezas[indice][dimension - 1] == null || piezas[indice][dimension - 1].obtenerDerecha() != valorExterior) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
      * Indica si todas las celdas tienen una pieza asignada.
      *
      * @return true si el tablero esta lleno
@@ -201,25 +180,8 @@ public class Rompecabezas {
     }
 
     /**
-     * Genera una vista detallada con los bordes de cada pieza.
-     *
-     * @return texto detallado del tablero
+     * Valida que una coordenada pertenezca al tablero.
      */
-    public String aTextoDetallado() {
-        StringBuilder texto = new StringBuilder();
-        for (int fila = 0; fila < dimension; fila++) {
-            for (int columna = 0; columna < dimension; columna++) {
-                Pieza pieza = piezas[fila][columna];
-                texto.append(pieza == null ? "null" : pieza.describir());
-                if (columna < dimension - 1) {
-                    texto.append(" | ");
-                }
-            }
-            texto.append(System.lineSeparator());
-        }
-        return texto.toString();
-    }
-
     private void validarPosicion(int fila, int columna) {
         if (fila < 0 || fila >= dimension || columna < 0 || columna >= dimension) {
             throw new IndexOutOfBoundsException("La posicion esta fuera del rompecabezas.");

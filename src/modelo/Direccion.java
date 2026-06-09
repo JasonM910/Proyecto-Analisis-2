@@ -2,6 +2,9 @@ package modelo;
 
 /**
  * Representa los cuatro lados de una pieza cuadrada.
+ *
+ * @since 2026-05-29
+ * @version 2026-06-09
  */
 public enum Direccion {
     ARRIBA,

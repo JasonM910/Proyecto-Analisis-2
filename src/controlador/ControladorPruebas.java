@@ -14,6 +14,9 @@ import java.util.Locale;
 
 /**
  * Coordina la generacion y verificacion automatica de rompecabezas.
+ *
+ * @since 2026-05-29
+ * @version 2026-06-09
  */
 public class ControladorPruebas {
     private static final int[] DIMENSIONES = {2, 3, 4, 5, 6, 10, 15};
@@ -37,15 +40,20 @@ public class ControladorPruebas {
         imprimirEncabezadoGeneral();
         for (int dimension : DIMENSIONES) {
             for (int valorMaximo : VALORES_MAXIMOS) {
+                DatosRompecabezas datos = generadorPiezas.generar(dimension, valorMaximo);
                 for (boolean permitirRotacion : OPCIONES_ROTACION) {
-                    ejecutarPrueba(dimension, valorMaximo, permitirRotacion);
+                    ejecutarPrueba(datos, permitirRotacion);
                 }
             }
         }
     }
 
-    private void ejecutarPrueba(int dimension, int valorMaximo, boolean permitirRotacion) {
-        DatosRompecabezas datos = generadorPiezas.generar(dimension, valorMaximo);
+    /**
+     * Ejecuta una variante de fuerza bruta y, para piezas fijas, el genetico.
+     */
+    private void ejecutarPrueba(DatosRompecabezas datos, boolean permitirRotacion) {
+        int dimension = datos.obtenerDimension();
+        int valorMaximo = datos.obtenerValorMaximo();
         List<Pieza> piezas = datos.obtenerPiezasMezcladas();
         Rompecabezas solucionConocida = datos.obtenerSolucionConocida();
 
@@ -54,9 +62,6 @@ public class ControladorPruebas {
         System.out.println("Orden mezclado de piezas:");
         imprimirPiezasMezcladas(piezas);
 
-        System.out.println();
-        System.out.println("Solucion conocida generada:");
-        System.out.println(solucionConocida.aTextoCompacto());
         imprimirValidacionSolucionConocida(solucionConocida);
 
         FuerzaBrutaSolver solver = new FuerzaBrutaSolver(permitirRotacion, calcularLimiteAlternativas(dimension, permitirRotacion));
@@ -64,57 +69,53 @@ public class ControladorPruebas {
         MetricasFuerzaBruta metricas = solver.obtenerMetricas();
 
         System.out.println("Resultado fuerza bruta:");
-        System.out.println(metricas.solucionEncontrada ? "Solucion completa encontrada:" : "Solucion parcial encontrada:");
+        System.out.println(metricas.seEncontroSolucion()
+                ? "Solucion completa encontrada:"
+                : "Mejor solucion parcial encontrada antes del limite:");
         System.out.println(solucionFuerzaBruta.aTextoCompacto());
-        System.out.println("Solucion completa: " + (metricas.solucionEncontrada ? "SI" : "NO"));
-        System.out.println("Limite alcanzado: " + (metricas.limiteAlcanzado ? "SI" : "NO"));
-        System.out.println("Limite de alternativas: " + metricas.limiteAlternativas);
-        System.out.println("Profundidad maxima: " + metricas.profundidadMaxima);
-        System.out.println("Alternativas evaluadas: " + metricas.alternativasEvaluadas);
-        System.out.println("Podas realizadas: " + metricas.podasRealizadas);
-        System.out.println("Comparaciones: " + metricas.comparaciones);
-        System.out.println("Asignaciones: " + metricas.asignaciones);
-        System.out.println("Lineas ejecutadas: " + metricas.lineasEjecutadas);
-        System.out.println("Lineas de codigo del algoritmo: " + metricas.lineasCodigoAlgoritmo);
-        System.out.printf("Tiempo ms: %.3f%n", metricas.tiempoMilisegundos);
-        System.out.println("Memoria estimada bytes: " + metricas.memoriaBytes);
+        System.out.println("Solucion completa: " + (metricas.seEncontroSolucion() ? "SI" : "NO"));
+        System.out.println("Limite alcanzado: " + (metricas.seAlcanzoLimite() ? "SI" : "NO"));
+        if (metricas.seAlcanzoLimite()) {
+            System.out.println("Tipo de resultado: PARCIAL POR CORTE EXPERIMENTAL");
+        }
+        System.out.println("Limite de alternativas: " + metricas.obtenerLimiteAlternativas());
+        System.out.println("Profundidad maxima: " + metricas.obtenerProfundidadMaxima());
+        System.out.println("Alternativas evaluadas: " + metricas.obtenerAlternativasEvaluadas());
+        System.out.println("Podas realizadas: " + metricas.obtenerPodasRealizadas());
+        System.out.println("Comparaciones: " + metricas.obtenerComparaciones());
+        System.out.println("Asignaciones: " + metricas.obtenerAsignaciones());
+        System.out.println("Lineas ejecutadas: " + metricas.obtenerLineasEjecutadas());
+        System.out.println("Lineas de codigo del modulo sin comentarios: "
+                + metricas.obtenerLineasCodigoAlgoritmo());
+        System.out.printf("Tiempo ms: %.3f%n", metricas.obtenerTiempoMilisegundos());
+        System.out.println("Memoria calculada bytes: " + metricas.obtenerMemoriaBytes());
         imprimirValidacionSolucionFuerzaBruta(solucionFuerzaBruta);
+
+        if (!permitirRotacion) {
+            ejecutarAlgoritmoGenetico(piezas, dimension);
+        }
+
         System.out.println("============================================================");
         System.out.println();
-        System.out.println("Resultado algoritmo genetico:");
-
-        GeneticSolver solverGenetico = new GeneticSolver(permitirRotacion);
-        Rompecabezas solucionGenetica = solverGenetico.resolver(piezas, dimension);
-        MetricasGenetico metricasGenetico = solverGenetico.obtenerMetricas();
-
-        System.out.println(metricasGenetico.solucionEncontrada ? "Solucion completa encontrada:" : "Solucion parcial encontrada:");
-        System.out.println();
-        System.out.println("========== RESUMEN GENETICO ==========");
-        System.out.println(solucionGenetica.aTextoCompacto());
-        System.out.println("Solucion completa: " + (metricasGenetico.solucionEncontrada ? "SI" : "NO"));
-        System.out.println("Mejor fitness: " + metricasGenetico.mejorFitness);
-        System.out.println("Peor fitness: " + metricasGenetico.peorFitness);
-        System.out.println("Promedio fitness: " + metricasGenetico.promedioFitness);
-        System.out.println("Generaciones ejecutadas: " + metricasGenetico.generacionesEjecutadas);
-        System.out.println("Comparaciones: " + metricasGenetico.comparaciones);
-        System.out.println("Asignaciones: " + metricasGenetico.asignaciones);
-        System.out.println("Lineas ejecutadas: " + metricasGenetico.lineasEjecutadas);
-        System.out.println("Lineas de codigo del algoritmo: " + metricasGenetico.lineasCodigoAlgoritmo);
-        System.out.printf("Tiempo ms: %.3f%n", metricasGenetico.tiempoMilisegundos);
-        System.out.println("Memoria estimada bytes: " + metricasGenetico.memoriaBytes);
-        System.out.println("Mutaciones realizadas: " + metricasGenetico.cantidadMutaciones);
-        System.out.println("Cruces realizados: " + metricasGenetico.cantidadCruces);
     }
 
+    /**
+     * Imprime la configuracion general de la ejecucion automatica.
+     */
     private void imprimirEncabezadoGeneral() {
         System.out.println("============================================================");
         System.out.println("EJECUCION AUTOMATICA DE ROMPECABEZAS CUADRADOS");
         System.out.println("Tamanos: 2x2, 3x3, 4x4, 5x5, 6x6, 10x10, 15x15");
         System.out.println("Rangos: 0..9 y 0..15 | Variante con/sin rotacion");
+        System.out.println("Lineas ejecutadas = asignaciones + comparaciones explicitas");
+        System.out.println("Memoria calculada con el modelo analitico de variables y estructuras");
         System.out.println("============================================================");
         System.out.println();
     }
 
+    /**
+     * Delimita una prueba mediante su dimension, rango y variante.
+     */
     private void imprimirTituloPrueba(int dimension, int valorMaximo, boolean permitirRotacion) {
         System.out.println("============================================================");
         System.out.println("PRUEBA " + dimension + "x" + dimension
@@ -123,6 +124,9 @@ public class ControladorPruebas {
         System.out.println("============================================================");
     }
 
+    /**
+     * Imprime las piezas en el orden desordenado entregado a los algoritmos.
+     */
     private void imprimirPiezasMezcladas(List<Pieza> piezas) {
         int piezasPorLinea = 4;
         for (int indice = 0; indice < piezas.size(); indice++) {
@@ -135,21 +139,69 @@ public class ControladorPruebas {
         }
     }
 
+    /**
+     * Confirma que la solucion usada para generar las piezas es valida.
+     */
     private void imprimirValidacionSolucionConocida(Rompecabezas solucionConocida) {
         boolean bordesInternosValidos = solucionConocida.verificarBordesAdyacentes();
-        boolean bordesExternosValidos = solucionConocida.verificarBordesExternos(GeneradorPiezas.VALOR_EXTERIOR);
+        if (!bordesInternosValidos) {
+            throw new IllegalStateException("El generador produjo una solucion conocida invalida.");
+        }
         System.out.println("Validacion de solucion generada:");
-        System.out.println("Bordes internos compatibles: " + (bordesInternosValidos ? "SI" : "NO"));
-        System.out.println("Bordes externos con valor 0: " + (bordesExternosValidos ? "SI" : "NO"));
+        System.out.println("Bordes internos compatibles: SI");
     }
 
+    /**
+     * Informa si fuerza bruta produjo un tablero completo y compatible.
+     */
     private void imprimirValidacionSolucionFuerzaBruta(Rompecabezas solucionFuerzaBruta) {
         boolean solucionValida = solucionFuerzaBruta.estaCompleto()
-                && solucionFuerzaBruta.verificarBordesAdyacentes()
-                && solucionFuerzaBruta.verificarBordesExternos(GeneradorPiezas.VALOR_EXTERIOR);
+                && solucionFuerzaBruta.verificarBordesAdyacentes();
         System.out.println("Solucion fuerza bruta valida: " + (solucionValida ? "SI" : "NO"));
     }
 
+    /**
+     * Ejecuta e imprime el algoritmo genetico para piezas sin rotacion.
+     */
+    private void ejecutarAlgoritmoGenetico(List<Pieza> piezas, int dimension) {
+        System.out.println();
+        System.out.println("Resultado algoritmo genetico con piezas fijas:");
+
+        GeneticSolver solverGenetico = new GeneticSolver();
+        Rompecabezas solucionGenetica = solverGenetico.resolver(piezas, dimension);
+        MetricasGenetico metricasGenetico = solverGenetico.obtenerMetricas();
+        boolean solucionValida = solucionGenetica.estaCompleto()
+                && solucionGenetica.verificarBordesAdyacentes();
+
+        System.out.println(metricasGenetico.seEncontroSolucion()
+                ? "Solucion completa encontrada:"
+                : "Mejor solucion candidata encontrada:");
+        System.out.println("========== RESUMEN GENETICO ==========");
+        System.out.println(solucionGenetica.aTextoCompacto());
+        System.out.println("Solucion completa: " + (metricasGenetico.seEncontroSolucion() ? "SI" : "NO"));
+        System.out.println("Solucion genetica valida: " + (solucionValida ? "SI" : "NO"));
+        System.out.println("Mejor fitness: " + metricasGenetico.obtenerMejorFitness());
+        System.out.println("Peor fitness: " + metricasGenetico.obtenerPeorFitness());
+        System.out.println("Promedio fitness: " + metricasGenetico.obtenerPromedioFitness());
+        System.out.println("Cantidad de poblacion: " + metricasGenetico.obtenerCantidadPoblacion());
+        System.out.println("Hijos por generacion: " + metricasGenetico.obtenerCantidadHijos());
+        System.out.println("Generaciones ejecutadas: " + metricasGenetico.obtenerGeneracionesEjecutadas());
+        System.out.println("Comparaciones: " + metricasGenetico.obtenerComparaciones());
+        System.out.println("Asignaciones: " + metricasGenetico.obtenerAsignaciones());
+        System.out.println("Lineas ejecutadas: " + metricasGenetico.obtenerLineasEjecutadas());
+        System.out.println("Lineas de codigo del modulo sin comentarios: "
+                + metricasGenetico.obtenerLineasCodigoAlgoritmo());
+        System.out.printf("Tiempo de computo ms: %.3f%n", metricasGenetico.obtenerTiempoMilisegundos());
+        System.out.println("Memoria calculada bytes: " + metricasGenetico.obtenerMemoriaBytes());
+        System.out.println("Mutaciones intentadas: " + metricasGenetico.obtenerMutacionesIntentadas());
+        System.out.println("Mutaciones aceptadas: " + metricasGenetico.obtenerCantidadMutaciones());
+        System.out.println("Mutaciones descartadas: " + metricasGenetico.obtenerMutacionesDescartadas());
+        System.out.println("Cruces realizados: " + metricasGenetico.obtenerCantidadCruces());
+    }
+
+    /**
+     * Define el corte experimental usado para evitar ejecuciones impracticables.
+     */
     private long calcularLimiteAlternativas(int dimension, boolean permitirRotacion) {
         if (dimension <= 3) {
             return permitirRotacion ? 1_000_000L : 250_000L;
