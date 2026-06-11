@@ -6,6 +6,7 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Punto de entrada del proyecto.
@@ -22,14 +23,14 @@ public class Main {
      */
     public static void main(String[] args) {
         PrintStream consola = System.out;
-        Path rutaResultados = Path.of("resultados_consola.txt");
+        Path rutaResultados = Paths.get("resultados_consola.txt");
 
         try (
                 OutputStream archivo = Files.newOutputStream(rutaResultados);
                 PrintStream salidaDuplicada = new PrintStream(
                         new SalidaDuplicada(consola, archivo),
                         true,
-                        StandardCharsets.UTF_8
+                    StandardCharsets.UTF_8.name()
                 )
         ) {
             System.setOut(salidaDuplicada);
