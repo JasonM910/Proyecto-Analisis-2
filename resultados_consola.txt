@@ -1,0 +1,373 @@
+============================================================
+EJECUCION AUTOMATICA DE ROMPECABEZAS CUADRADOS
+Tamanos: 2x2, 3x3, 4x4, 5x5, 6x6, 10x10, 15x15
+Rangos: 0..9 y 0..15 | Variante con/sin rotacion
+Lineas ejecutadas = asignaciones + comparaciones explicitas
+Memoria calculada con el modelo analitico de variables y estructuras
+============================================================
+
+============================================================
+PRUEBA 2x2 | Valores 0..9 | Rotacion permitida: SI
+============================================================
+Cantidad de piezas generadas: 4
+Orden mezclado de piezas:
+P1(r0)[8,3,5,1]  P2(r0)[4,6,7,3]  P4(r0)[7,0,8,4]  P3(r0)[5,4,2,9]
+Validacion de solucion generada:
+Bordes internos compatibles: SI
+Resultado fuerza bruta:
+Solucion completa encontrada:
+P001@000 | P002@000
+P003@000 | P004@000
+
+Solucion completa: SI
+Limite alcanzado: NO
+Limite de alternativas: 1000000
+Profundidad maxima: 4
+Alternativas evaluadas: 8
+Podas realizadas: 4
+Comparaciones: 86
+Asignaciones: 103
+Lineas ejecutadas: 189
+Lineas de codigo del modulo sin comentarios: 256
+Tiempo ms: 2.798
+Memoria calculada bytes: 996
+Solucion fuerza bruta valida: SI
+
+Resultado algoritmo genetico con piezas fijas:
+Generacion genetica #1
+Padre 1: P3(r0)[5,4,2,9] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P4(r0)[7,0,8,4]  puntuacion 0.0
+Padre 2: P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P3(r0)[5,4,2,9] P2(r0)[4,6,7,3]  puntuacion 0.0
+Hijo 1: P3(r0)[5,4,2,9] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P4(r0)[7,0,8,4]  puntuacion 0.0
+Hijo 2: P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P3(r0)[5,4,2,9] P2(r0)[4,6,7,3]  puntuacion 0.0
+
+Mutacion por poblacion repetida:
+Individuo original: P3(r0)[5,4,2,9] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P4(r0)[7,0,8,4]  puntuacion 0.0
+Intercambio de posiciones: 0 y 1
+Mutacion: P1(r0)[8,3,5,1] P3(r0)[5,4,2,9] P2(r0)[4,6,7,3] P4(r0)[7,0,8,4]  puntuacion 0.0
+Resultado de mutacion: DESCARTADA
+
+Mutacion por poblacion repetida:
+Individuo original: P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P3(r0)[5,4,2,9] P2(r0)[4,6,7,3]  puntuacion 0.0
+Intercambio de posiciones: 1 y 0
+Mutacion: P1(r0)[8,3,5,1] P4(r0)[7,0,8,4] P3(r0)[5,4,2,9] P2(r0)[4,6,7,3]  puntuacion 1.0
+Resultado de mutacion: ACEPTADA
+
+Padre 1: P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P3(r0)[5,4,2,9] P2(r0)[4,6,7,3]  puntuacion 0.0
+Padre 2: P3(r0)[5,4,2,9] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P4(r0)[7,0,8,4]  puntuacion 0.0
+Hijo 1: P2(r0)[4,6,7,3] P1(r0)[8,3,5,1] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 1.0
+Hijo 2: P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9]  puntuacion 1.0
+
+Mejor fitness de la generacion: 4.0
+
+Generacion genetica #2
+Padre 1: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Padre 2: P1(r0)[8,3,5,1] P4(r0)[7,0,8,4] P3(r0)[5,4,2,9] P2(r0)[4,6,7,3]  puntuacion 1.0
+Hijo 1: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Hijo 2: P1(r0)[8,3,5,1] P4(r0)[7,0,8,4] P3(r0)[5,4,2,9] P2(r0)[4,6,7,3]  puntuacion 1.0
+
+Mutacion por poblacion repetida:
+Individuo original: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Intercambio de posiciones: 1 y 0
+Mutacion: P2(r0)[4,6,7,3] P1(r0)[8,3,5,1] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 1.0
+Resultado de mutacion: DESCARTADA
+
+Mutacion por poblacion repetida:
+Individuo original: P1(r0)[8,3,5,1] P4(r0)[7,0,8,4] P3(r0)[5,4,2,9] P2(r0)[4,6,7,3]  puntuacion 1.0
+Intercambio de posiciones: 2 y 0
+Mutacion: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Resultado de mutacion: ACEPTADA
+
+Padre 1: P1(r0)[8,3,5,1] P4(r0)[7,0,8,4] P3(r0)[5,4,2,9] P2(r0)[4,6,7,3]  puntuacion 1.0
+Padre 2: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Hijo 1: P1(r0)[8,3,5,1] P4(r0)[7,0,8,4] P3(r0)[5,4,2,9] P2(r0)[4,6,7,3]  puntuacion 1.0
+Hijo 2: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+
+Mutacion por poblacion repetida:
+Individuo original: P1(r0)[8,3,5,1] P4(r0)[7,0,8,4] P3(r0)[5,4,2,9] P2(r0)[4,6,7,3]  puntuacion 1.0
+Intercambio de posiciones: 0 y 1
+Mutacion: P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P3(r0)[5,4,2,9] P2(r0)[4,6,7,3]  puntuacion 0.0
+Resultado de mutacion: DESCARTADA
+
+Mutacion por poblacion repetida:
+Individuo original: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Intercambio de posiciones: 2 y 1
+Mutacion: P1(r0)[8,3,5,1] P3(r0)[5,4,2,9] P2(r0)[4,6,7,3] P4(r0)[7,0,8,4]  puntuacion 0.0
+Resultado de mutacion: DESCARTADA
+
+Mejor fitness de la generacion: 4.0
+
+Generacion genetica #3
+Padre 1: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Padre 2: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Hijo 1: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Hijo 2: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+
+Mutacion por poblacion repetida:
+Individuo original: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Intercambio de posiciones: 2 y 1
+Mutacion: P1(r0)[8,3,5,1] P3(r0)[5,4,2,9] P2(r0)[4,6,7,3] P4(r0)[7,0,8,4]  puntuacion 0.0
+Resultado de mutacion: DESCARTADA
+
+Mutacion por poblacion repetida:
+Individuo original: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Intercambio de posiciones: 0 y 3
+Mutacion: P2(r0)[4,6,7,3] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P3(r0)[5,4,2,9]  puntuacion 0.0
+Resultado de mutacion: DESCARTADA
+
+Padre 1: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Padre 2: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Hijo 1: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Hijo 2: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+
+Mutacion por poblacion repetida:
+Individuo original: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Intercambio de posiciones: 2 y 1
+Mutacion: P3(r0)[5,4,2,9] P1(r0)[8,3,5,1] P4(r0)[7,0,8,4] P2(r0)[4,6,7,3]  puntuacion 0.0
+Resultado de mutacion: DESCARTADA
+
+Mutacion por poblacion repetida:
+Individuo original: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Intercambio de posiciones: 1 y 3
+Mutacion: P1(r0)[8,3,5,1] P4(r0)[7,0,8,4] P3(r0)[5,4,2,9] P2(r0)[4,6,7,3]  puntuacion 1.0
+Resultado de mutacion: DESCARTADA
+
+Mejor fitness de la generacion: 4.0
+
+Generacion genetica #4
+Padre 1: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Padre 2: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Hijo 1: P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P3(r0)[5,4,2,9] P2(r0)[4,6,7,3]  puntuacion 0.0
+Hijo 2: P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P1(r0)[8,3,5,1] P4(r0)[7,0,8,4]  puntuacion 0.0
+
+Padre 1: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Padre 2: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Hijo 1: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Hijo 2: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+
+Mutacion por poblacion repetida:
+Individuo original: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Intercambio de posiciones: 2 y 0
+Mutacion: P1(r0)[8,3,5,1] P4(r0)[7,0,8,4] P3(r0)[5,4,2,9] P2(r0)[4,6,7,3]  puntuacion 1.0
+Resultado de mutacion: DESCARTADA
+
+Mutacion por poblacion repetida:
+Individuo original: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Intercambio de posiciones: 0 y 3
+Mutacion: P4(r0)[7,0,8,4] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P1(r0)[8,3,5,1]  puntuacion 0.0
+Resultado de mutacion: DESCARTADA
+
+Mejor fitness de la generacion: 4.0
+
+Generacion genetica #5
+Padre 1: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Padre 2: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Hijo 1: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Hijo 2: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+
+Mutacion por poblacion repetida:
+Individuo original: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Intercambio de posiciones: 1 y 0
+Mutacion: P2(r0)[4,6,7,3] P1(r0)[8,3,5,1] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 1.0
+Resultado de mutacion: DESCARTADA
+
+Mutacion por poblacion repetida:
+Individuo original: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Intercambio de posiciones: 1 y 2
+Mutacion: P3(r0)[5,4,2,9] P1(r0)[8,3,5,1] P4(r0)[7,0,8,4] P2(r0)[4,6,7,3]  puntuacion 0.0
+Resultado de mutacion: DESCARTADA
+
+Padre 1: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Padre 2: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Hijo 1: P2(r0)[4,6,7,3] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P3(r0)[5,4,2,9]  puntuacion 0.0
+Hijo 2: P4(r0)[7,0,8,4] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P1(r0)[8,3,5,1]  puntuacion 0.0
+
+Mejor fitness de la generacion: 4.0
+
+Generacion genetica #6
+Padre 1: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Padre 2: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Hijo 1: P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P3(r0)[5,4,2,9] P2(r0)[4,6,7,3]  puntuacion 0.0
+Hijo 2: P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P1(r0)[8,3,5,1] P4(r0)[7,0,8,4]  puntuacion 0.0
+
+Padre 1: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Padre 2: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Hijo 1: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Hijo 2: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+
+Mutacion por poblacion repetida:
+Individuo original: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Intercambio de posiciones: 3 y 2
+Mutacion: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P2(r0)[4,6,7,3] P1(r0)[8,3,5,1]  puntuacion 2.0
+Resultado de mutacion: DESCARTADA
+
+Mutacion por poblacion repetida:
+Individuo original: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Intercambio de posiciones: 3 y 0
+Mutacion: P4(r0)[7,0,8,4] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P1(r0)[8,3,5,1]  puntuacion 0.0
+Resultado de mutacion: DESCARTADA
+
+Mejor fitness de la generacion: 4.0
+
+Generacion genetica #7
+Padre 1: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Padre 2: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Hijo 1: P3(r0)[5,4,2,9] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P4(r0)[7,0,8,4]  puntuacion 0.0
+Hijo 2: P1(r0)[8,3,5,1] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P2(r0)[4,6,7,3]  puntuacion 0.0
+
+Padre 1: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Padre 2: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Hijo 1: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Hijo 2: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+
+Mutacion por poblacion repetida:
+Individuo original: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Intercambio de posiciones: 0 y 3
+Mutacion: P2(r0)[4,6,7,3] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P3(r0)[5,4,2,9]  puntuacion 0.0
+Resultado de mutacion: DESCARTADA
+
+Mutacion por poblacion repetida:
+Individuo original: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Intercambio de posiciones: 2 y 3
+Mutacion: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P4(r0)[7,0,8,4] P3(r0)[5,4,2,9]  puntuacion 1.0
+Resultado de mutacion: DESCARTADA
+
+Mejor fitness de la generacion: 4.0
+
+Generacion genetica #8
+Padre 1: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Padre 2: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Hijo 1: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Hijo 2: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+
+Mutacion por poblacion repetida:
+Individuo original: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Intercambio de posiciones: 1 y 3
+Mutacion: P1(r0)[8,3,5,1] P4(r0)[7,0,8,4] P3(r0)[5,4,2,9] P2(r0)[4,6,7,3]  puntuacion 1.0
+Resultado de mutacion: DESCARTADA
+
+Mutacion por poblacion repetida:
+Individuo original: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Intercambio de posiciones: 3 y 0
+Mutacion: P2(r0)[4,6,7,3] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P3(r0)[5,4,2,9]  puntuacion 0.0
+Resultado de mutacion: DESCARTADA
+
+Padre 1: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Padre 2: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Hijo 1: P2(r0)[4,6,7,3] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P3(r0)[5,4,2,9]  puntuacion 0.0
+Hijo 2: P4(r0)[7,0,8,4] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P1(r0)[8,3,5,1]  puntuacion 0.0
+
+Mejor fitness de la generacion: 4.0
+
+Generacion genetica #9
+Padre 1: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Padre 2: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Hijo 1: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Hijo 2: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+
+Mutacion por poblacion repetida:
+Individuo original: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Intercambio de posiciones: 0 y 3
+Mutacion: P4(r0)[7,0,8,4] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P1(r0)[8,3,5,1]  puntuacion 0.0
+Resultado de mutacion: DESCARTADA
+
+Mutacion por poblacion repetida:
+Individuo original: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Intercambio de posiciones: 0 y 2
+Mutacion: P1(r0)[8,3,5,1] P4(r0)[7,0,8,4] P3(r0)[5,4,2,9] P2(r0)[4,6,7,3]  puntuacion 1.0
+Resultado de mutacion: DESCARTADA
+
+Padre 1: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Padre 2: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Hijo 1: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Hijo 2: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+
+Mutacion por poblacion repetida:
+Individuo original: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Intercambio de posiciones: 0 y 1
+Mutacion: P4(r0)[7,0,8,4] P3(r0)[5,4,2,9] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Resultado de mutacion: DESCARTADA
+
+Mutacion por poblacion repetida:
+Individuo original: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Intercambio de posiciones: 1 y 2
+Mutacion: P1(r0)[8,3,5,1] P3(r0)[5,4,2,9] P2(r0)[4,6,7,3] P4(r0)[7,0,8,4]  puntuacion 0.0
+Resultado de mutacion: DESCARTADA
+
+Mejor fitness de la generacion: 4.0
+
+Generacion genetica #10
+Padre 1: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Padre 2: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Hijo 1: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Hijo 2: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+
+Mutacion por poblacion repetida:
+Individuo original: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Intercambio de posiciones: 0 y 2
+Mutacion: P3(r0)[5,4,2,9] P2(r0)[4,6,7,3] P1(r0)[8,3,5,1] P4(r0)[7,0,8,4]  puntuacion 1.0
+Resultado de mutacion: DESCARTADA
+
+Mutacion por poblacion repetida:
+Individuo original: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Intercambio de posiciones: 3 y 0
+Mutacion: P2(r0)[4,6,7,3] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P3(r0)[5,4,2,9]  puntuacion 0.0
+Resultado de mutacion: DESCARTADA
+
+Padre 1: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Padre 2: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Hijo 1: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Hijo 2: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+
+Mutacion por poblacion repetida:
+Individuo original: P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3]  puntuacion 2.0
+Intercambio de posiciones: 1 y 2
+Mutacion: P3(r0)[5,4,2,9] P1(r0)[8,3,5,1] P4(r0)[7,0,8,4] P2(r0)[4,6,7,3]  puntuacion 0.0
+Resultado de mutacion: DESCARTADA
+
+Mutacion por poblacion repetida:
+Individuo original: P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 4.0
+Intercambio de posiciones: 1 y 0
+Mutacion: P2(r0)[4,6,7,3] P1(r0)[8,3,5,1] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4]  puntuacion 1.0
+Resultado de mutacion: DESCARTADA
+
+Mejor fitness de la generacion: 4.0
+
+========== MEJORES 3 POBLACIONES ==========
+Poblacion #1
+Fitness: 4.0
+P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] 
+
+Poblacion #2
+Fitness: 2.0
+P3(r0)[5,4,2,9] P4(r0)[7,0,8,4] P1(r0)[8,3,5,1] P2(r0)[4,6,7,3] 
+
+Poblacion #3
+Fitness: 1.0
+P1(r0)[8,3,5,1] P4(r0)[7,0,8,4] P3(r0)[5,4,2,9] P2(r0)[4,6,7,3] 
+
+Solucion completa encontrada:
+========== RESUMEN GENETICO ==========
+P001@000 | P002@000
+P003@000 | P004@000
+
+Solucion completa: SI
+Solucion genetica valida: SI
+Mejor fitness: 4.0
+Peor fitness: 2.0
+Promedio fitness: 3.0
+Cantidad de poblacion: 2
+Hijos por generacion: 4
+Generaciones ejecutadas: 10
+Comparaciones: 12063
+Asignaciones: 27633
+Lineas ejecutadas: 39696
+Lineas de codigo del modulo sin comentarios: 947
+Tiempo de computo ms: 7.010
+Memoria calculada bytes: 1430
+Mutaciones intentadas: 28
+Mutaciones aceptadas: 2
+Mutaciones descartadas: 26
+Cruces realizados: 20
+============================================================
+
+Resultados guardados en: C:\Users\jeank\OneDrive\Desktop\Analisis Proyecto 2\Proyecto-Analisis-2\resultados_consola.txt

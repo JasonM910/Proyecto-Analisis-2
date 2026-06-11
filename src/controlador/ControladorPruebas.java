@@ -88,9 +88,9 @@ public class ControladorPruebas {
         System.out.println("Memoria calculada bytes: " + metricas.obtenerMemoriaBytes());
         imprimirValidacionSolucionFuerzaBruta(solucionFuerzaBruta);
 
-        if (!permitirRotacion) {
-            ejecutarAlgoritmoGenetico(piezas, dimension);
-        }
+        
+         ejecutarAlgoritmoGenetico(piezas, dimension);
+        
 
         System.out.println("============================================================");
         System.out.println();
